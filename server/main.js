@@ -167,7 +167,7 @@ aggregateDaily = () =>{
 Meteor.startup(function(){
     if (Meteor.isDevelopment){
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-        import DEFAULTSETTINGSJSON from '../default_settings.json'
+        import DEFAULTSETTINGSJSON from '../settings.json'
         Object.keys(DEFAULTSETTINGSJSON).forEach((key) => {
             if (Meteor.settings[key] == undefined) {
                 console.warn(`CHECK SETTINGS JSON: ${key} is missing from settings`)
