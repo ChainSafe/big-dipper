@@ -21,7 +21,7 @@ timerMissedBlock = 0;
 timerDelegation = 0;
 timerAggregate = 0;
 
-const DEFAULTSETTINGS = '/default_settings.json';
+const DEFAULTSETTINGS = '/settings.json';
 
 updateChainStatus = () => {
     Meteor.call('chain.updateStatus', (error, result) => {
