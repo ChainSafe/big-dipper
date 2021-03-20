@@ -187,7 +187,8 @@ export default class ChainStatus extends React.Component {
                                 <CardText><span className="display-4 value text-primary">{this.state.numValidators}</span><T totalValidators={this.state.totalNumValidators}>chainStatus.outOfValidators</T></CardText>
                             </Card>
                         </Col>
-                        <Col lg={3} md={6}>
+                        {/* ::Dont require voting power here:: */}
+                        {/* <Col lg={3} md={6}>
                             <Card body>
                                 <UncontrolledDropdown size="sm" className="more">
                                     <DropdownToggle>
@@ -199,10 +200,11 @@ export default class ChainStatus extends React.Component {
                                         {this.props.status.lastDayVotingPower?<DropdownItem onClick={(e) => this.handleSwitchVotingPower("d", e)}><T>chainStatus.lastDay</T></DropdownItem>:''}
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
+                                
                                 <CardTitle><T>chainStatus.onlineVotingPower</T> ({this.state.votingPowerText})</CardTitle>
                                 <CardText><span className="display-4 value text-primary">{this.state.votingPower}</span><T percent={numbro(this.state.bondedTokens/this.state.totalSupply).format("0.00%")} totalStakes={numbro(this.state.totalSupply/Coin.StakingCoin.fraction).format("0.00a")} denom={Coin.StakingCoin.displayName} denomPlural={Coin.StakingCoin.displayName}>chainStatus.fromTotalStakes</T></CardText>
                             </Card>
-                        </Col>
+                        </Col> */}
                     </Row>
                 )
             }
