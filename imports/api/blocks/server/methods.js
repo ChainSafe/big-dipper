@@ -204,7 +204,7 @@ Meteor.methods({
 
             try{
                 response = HTTP.get(url);
-                JSON.parse(response.content).result.forEach((validator) => validatorSet[validator.consensus_pubkey] = validator);
+                JSON.parse(response.content).result.forEach((validators) => validatorSet[validators.consensus_pubkey] = validators);
             }
             catch(e){
                 console.log(url);
@@ -215,7 +215,10 @@ Meteor.methods({
 
             try{
                 response = HTTP.get(url);
-                JSON.parse(response.content).result.forEach((validator) => validatorSet[validator.consensus_pubkey] = validator)
+                let res = JSON.parse(response.content).result
+                for (var i=0; i<res.validators.length; i++) {
+                  validatorSet[res.validators[i].pub_key.value] = res.validators[i]
+                }
             }
             catch(e){
                 console.log(url);
@@ -226,7 +229,10 @@ Meteor.methods({
 
             try{
                 response = HTTP.get(url);
-                JSON.parse(response.content).result.forEach((validator) => validatorSet[validator.consensus_pubkey] = validator)
+                let res = JSON.parse(response.content).result
+                for (var i=0; i<res.validators.length; i++) {
+                  validatorSet[res.validators[i].pub_key.value] = res.validators[i]
+                }
             }
             catch(e){
                 console.log(url);
@@ -490,17 +496,17 @@ Meteor.methods({
                             }
 
                             // get self delegation every 30 blocks
-                            if (height == curr+1){ //if (height % 50 == 2){
-                                let url = LCD+`/staking/delegators/${valData.delegator_address}/delegations/${valData.operator_address}`
-                                try{
-                                    let response = HTTP.get(url);
-                                    let selfDelegation = JSON.parse(response.content).result;
-                                    valData.self_delegation = (selfDelegation && selfDelegation.shares)?parseFloat(selfDelegation.shares)/parseFloat(valData.delegator_shares):0;
-                                }
-                                catch(e){
-                                    console.log("Getting self delegation: %o, \nurl: %o", e.response, url)
-                                }
-                            }
+                            // if (height == curr+1){ //if (height % 50 == 2){
+                            //     let url = LCD+`/staking/delegators/${valData.delegator_address}/delegations/${valData.operator_address}`
+                            //     try{
+                            //         let response = HTTP.get(url);
+                            //         let selfDelegation = JSON.parse(response.content).result;
+                            //         valData.self_delegation = (selfDelegation && selfDelegation.shares)?parseFloat(selfDelegation.shares)/parseFloat(valData.delegator_shares):0;
+                            //     }
+                            //     catch(e){
+                            //         console.log("Getting self delegation: %o, \nurl: %o", e.response, url)
+                            //     }
+                            // }
 
                             if ((height == curr+1) || (height == until) || (height % Meteor.settings.params.validatorUpdateWindow == 0)){
                                 bulkValidators.find({consensus_pubkey: valData.consensus_pubkey}).upsert().updateOne({$set:valData});
