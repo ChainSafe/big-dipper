@@ -12,34 +12,17 @@ Meteor.methods({
             return "Syncing transactions...";
 
         const transactions = Transactions.find({processed:false},{limit: 500}).fetch();
-        
-        console.log("TRANSACTIONS: ", transactions);
-        console.log("TRANSACTIONS LENGTH: ", transactions.length)
-
         try{
             TXSYNCING = true;
             const bulkTransactions = Transactions.rawCollection().initializeUnorderedBulkOp();
             for (let i in transactions){
-                console.log("i: ", i);
-                console.log("transactions["+i+"]: ", transactions[i]);
-                console.log("transactions["+i+"].txhash: ", transactions[i].txhash);
-                console.log("transactions["+i+"].height: ", parseInt(transactions[i].height));
-                console.log("transactions["+i+"].processed: ", transactions[i].processed);
                 try {
                     let url = LCD+ '/txs/0x'+transactions[i].txhash;
                     let response = HTTP.get(url);
                     let tx = JSON.parse(response.content);
-
-                    console.log("RESPONSE: ", response);
-                    console.log("RESPONSE.TX: ", tx)
             
                     transactions[i].height = parseInt(transactions[i].height);
                     transactions[i].processed = true;
-
-                    console.log("TX HEIGHT: ", transactions[i].height);
-                    console.log("TX PROCESSED: ", transactions[i].processed);
-
-                    console.log("TRANSACTION HASH: ", {txhash:'0x'+transactions[i].txhash});
 
                     bulkTransactions.find({txhash:'0x'+transactions[i].txhash}).updateOne({$set:tx});
                 }
@@ -47,27 +30,6 @@ Meteor.methods({
                     console.log("Getting transaction %o: %o", hash, e);
                 }
             }
-            // for (let i in transactions){
-            //     console.log("i: ", i);
-            //     console.log("transactions: ", transactions);
-            //     try {
-            //         let url = LCD+ '/txs/'+transactions[i].txhash;
-            //         let response = HTTP.get(url);
-            //         let tx = JSON.parse(response.content);
-            
-            //         tx.height = parseInt(tx.height);
-            //         tx.processed = true;
-
-            //         console.log("TRANSACTION HASH: ", '0x'+{txhash:transactions[i].txhash});
-
-            //         bulkTransactions.find('0x'+{txhash:transactions[i].txhash}).updateOne({$set:tx});
-
-            
-            //     }
-            //     catch(e) {
-            //         console.log("Getting transaction %o: %o", hash, e);
-            //     }
-            // }
             if (bulkTransactions.length > 0){
                 console.log("aaa: %o",bulkTransactions.length)
                 bulkTransactions.execute((err, result) => {
