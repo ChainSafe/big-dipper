@@ -48,7 +48,7 @@ class App extends Component {
         let lastDay = moment("2019-02-10");
         let now = moment();
         if (now.diff(lastDay) < 0 ){
-            toast.error("🐷 Gung Hei Fat Choi! 恭喜發財！");
+            toast.error("HOLA！ ARASKA WUZ HEYA");
         }
 
         let lang = getLang();
@@ -84,13 +84,11 @@ class App extends Component {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/blocks" component={BlocksTable} />
-                            <Route path="/transactions" component={Transactions} />
                             <Route path="/account/:address" render={(props)=><Account {...props} />} />
                             <Route path="/validators" exact component={Validators} />
                             <Route path="/validators/inactive" render={(props) => <Validators {...props} inactive={true} />} />
                             <Route path="/voting-power-distribution" component={Distribution} />
                             <Route path="/(validator|validators)" component={ValidatorDetails} />
-                            {Meteor.settings.public.modules.gov?<Route path="/proposals" component={Proposals} />:null}
                             <Route component={NotFound} />
                         </Switch>
                     </SentryBoundary>

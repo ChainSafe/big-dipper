@@ -185,7 +185,11 @@ export default class Header extends Component {
                         <NavItem>
                             <NavLink tag={Link} to="/blocks"><T>navbar.blocks</T></NavLink>
                         </NavItem>
-                        <NavItem>
+                        {/* 
+                            REMOVE TRANSACTIONS, PROPOSALS, VOTING POWER
+                            NAVBAR REMOVAL
+                        */}
+                        {/* <NavItem>
                             <NavLink tag={Link} to="/transactions"><T>navbar.transactions</T></NavLink>
                         </NavItem>
                         <NavItem>
@@ -193,7 +197,7 @@ export default class Header extends Component {
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} to="/voting-power-distribution"><T>navbar.votingPower</T></NavLink>
-                        </NavItem>
+                        </NavItem> */}
                         <NavItem id="user-acconut-icon">
                             {!signedInAddress?<Button className="sign-in-btn" color="link" size="lg" onClick={() => {this.setState({isSignInOpen: true})}}><i className="material-icons">vpn_key</i></Button>:
                                 <span>

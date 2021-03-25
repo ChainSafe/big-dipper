@@ -15,10 +15,7 @@ export default class SearchBar extends Component {
         let accountRegEx = new RegExp(Meteor.settings.public.bech32PrefixAccAddr+'.*$', 'igm');
         if (query != ""){
             if (!isNaN(query)){
-                this.props.history.push('/blocks/'+query);
-            }
-            else if (query.match(hashRegEx)){
-                this.props.history.push('/transactions/'+query);
+                this.props.history.push('/blocks/0x'+query);
             }
             else if (query.match(validatorRegEx)){
                 this.props.history.push('/validator/'+query);
